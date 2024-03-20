@@ -64,6 +64,12 @@ pipeline {
 	    }
 	}
 
+	stage("check user") {
+	    steps {
+		    sh "whoami"
+	    }
+	}
+
         stage("Build & Push Docker Image") {
             steps {
                 script {
