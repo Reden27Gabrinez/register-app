@@ -39,6 +39,13 @@ pipeline {
            }
        }
 
+
+	stage("Login to docker") {
+	    steps {
+		    sh "echo $DOCKER_PASS | docker login -u $DOCKER_PASS --password-stdin"
+	    }
+	}
+
        stage("SonarQube Analysis"){
            steps {
 	           script {
@@ -58,11 +65,6 @@ pipeline {
 
         }
 
-	stage("Login to docker") {
-	    steps {
-		    sh "echo $DOCKER_PASS | docker login -u $DOCKER_PASS --password-stdin"
-	    }
-	}
 
 	stage("check user") {
 	    steps {
