@@ -58,43 +58,21 @@ pipeline {
 
         }
 
-    //     stage("Build & Push Docker Image") {
-    //         steps {
-    //             script {
-    //                 docker.withRegistry('',DOCKER_PASS) {
-    //                     docker_image = docker.build "${IMAGE_NAME}"
-    //                 }
-
-    //                 docker.withRegistry('',DOCKER_PASS) {
-    //                     docker_image.push("${IMAGE_TAG}")
-    //                     docker_image.push('latest')
-    //                 }
-    //             }
-    //         }
-
-    //    }
-        stage('Build') {
-                steps {
-                // Checkout your source code from SCM
-                checkout scm
-                
-                // Build Docker image
-                script {
-                    docker.build(${IMAGE_NAME} + ':latest')
-                }
-            }
-        }
-
-        stage('Push') {
+        stage("Build & Push Docker Image") {
             steps {
-                // Push Docker image
                 script {
                     docker.withRegistry('',DOCKER_PASS) {
-                        docker.image("${IMAGE_TAG}").push('latest')
+                        docker_image = docker.build "${IMAGE_NAME}"
                     }
+
+                    // docker.withRegistry('',DOCKER_PASS) {
+                    //     docker_image.push("${IMAGE_TAG}")
+                    //     docker_image.push('latest')
+                    // }
                 }
             }
-        }
+
+       }
 
     //    stage("Trivy Scan") {
     //        steps {
