@@ -26,6 +26,12 @@ pipeline {
                 }
         }
 
+	stage("check user") {
+	    steps {
+		    sh "whoami"
+	    }
+	}
+
         stage("Build Application"){
             steps {
                 sh "mvn clean package"
@@ -65,12 +71,6 @@ pipeline {
 
         }
 
-
-	stage("check user") {
-	    steps {
-		    sh "whoami"
-	    }
-	}
 
         stage("Build & Push Docker Image") {
             steps {
